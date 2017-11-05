@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Account Types";
+}
+
+<h2>Available Account Types</h2>
+
+<ul>
+    @foreach(string account in ViewBag.AccountTypes)
+    {
+        <li>@account</li>
+    }
+</ul>

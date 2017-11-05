@@ -1,0 +1,12 @@
+﻿@model MVCBank.Models.CheckAccount
+@{
+    ViewBag.Title = "Check Account";
+}
+
+
+@*<a class="btn btn-primary btn-block" href="@Url.Action("Details", "CheckAccount")">Account Details</a>*@
+
+<h3>Welcome, @Model.Name !</h3>
+<p>@Html.DisplayFor(model => model.Name), To view the details of your account, please click below!</p>
+
+@Html.ActionLink("Account Details", "Details", "CheckAccount", null, new { @class= "btn btn-primary btn-block" })
