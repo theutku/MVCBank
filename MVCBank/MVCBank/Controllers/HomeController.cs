@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using MVCBank.Models;
 
 namespace MVCBank.Controllers
 {
 
     public class HomeController : Controller
-    { 
+    {
+
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        [Authorize]
         public ActionResult Index(int data = 1)
         { 
             ViewBag.PageHeader = "Home" + data;
+            var userId = User.Identity.GetUserId();
+            var checkAccountId = this.db.CheckAccounts.Where(c => c.ApplicationUserId == userId).First().Id;
+            ViewBag.CheckAccountId = checkAccountId;
             return View();
         }
          

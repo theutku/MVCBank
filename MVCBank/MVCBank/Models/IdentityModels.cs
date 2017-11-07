@@ -34,5 +34,7 @@ namespace MVCBank.Models
         }
 
         public DbSet<CheckAccount> CheckAccounts { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVCBank.Models;
+using MVCBank.Services;
 
 namespace MVCBank.Controllers
 {
@@ -17,7 +18,6 @@ namespace MVCBank.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private int a;
         public AccountController()
         {
         }
@@ -155,10 +155,8 @@ namespace MVCBank.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    var db = new ApplicationDbContext();
-                    var checkAccount = new CheckAccount { FirstName = model.FirstName, LastName = model.LastName, AccountNumber = "0000123456", Balance = 0, ApplicationUserId = user.Id };
-                    db.CheckAccounts.Add(checkAccount);
-                    db.SaveChanges();
+                    var service = new CheckAccountServices(HttpContext.GetOwinContext().Get<ApplicationDbContext>());
+                    service.CreateCheckAccount(model.FirstName, model.LastName, user.Id, 0);
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
