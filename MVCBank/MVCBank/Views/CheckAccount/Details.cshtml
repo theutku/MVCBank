@@ -1,6 +1,11 @@
-﻿@model MVCBank.Models.CheckAccount
+﻿@using MVCBank.Services;
+@using Microsoft.AspNet.Identity;
+
+
+@model MVCBank.Models.CheckAccount
 @{
     ViewBag.Title = "Account Details";
+    var currentUserId = User.Identity.GetUserId();
 }
 
 <h2>Account Details</h2>
@@ -21,3 +26,12 @@
 
 
 </dl>
+
+
+@{
+    if (CheckAccountServices.isAdmin(currentUserId))
+    {
+        @Html.ActionLink("Back to List", "List")
+
+    }
+}

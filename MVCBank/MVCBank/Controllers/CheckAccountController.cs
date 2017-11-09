@@ -4,22 +4,49 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVCBank.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MVCBank.Controllers
 {
+    [Authorize]
     public class CheckAccountController : Controller
     {
-        CheckAccount dummyAccount = new CheckAccount { AccountNumber = "001234", FirstName = "Utku", LastName = "Turkoglu", Balance = 100 };
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        private CheckAccount GetUserAccount()
+        {
+            var currentUserId = User.Identity.GetUserId();
+            CheckAccount checkAccount = this.db.CheckAccounts.Where(acc => acc.ApplicationUserId == currentUserId).First();
+            return checkAccount;
+        }
+
+        //private CheckAccount dummyAccount = new CheckAccount { AccountNumber = "001234", FirstName = "Utku", LastName = "Turkoglu", Balance = 100 };
         // GET: CheckAccount
         public ActionResult Index()
         {
-            return View(this.dummyAccount);
+            CheckAccount userCheckAccount = this.GetUserAccount();
+            return View(userCheckAccount);
         }
 
         // GET: CheckAccount/Details
         public ActionResult Details()
         {
-            return View(this.dummyAccount);
+            CheckAccount userCheckAccount = this.GetUserAccount();
+            return View(userCheckAccount);
+        }
+
+        [Authorize(Roles ="Admin")]
+        public ActionResult DetailsForAdmin(int accountId)
+        {
+            CheckAccount accountDetail = this.db.CheckAccounts.Find(accountId);
+            return View("Details", accountDetail);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult List()
+        {
+            List<CheckAccount> allAccounts = this.db.CheckAccounts.ToList();
+            return View(allAccounts);
         }
 
         // GET: CheckAccount/Create

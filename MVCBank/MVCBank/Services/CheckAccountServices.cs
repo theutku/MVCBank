@@ -18,9 +18,17 @@ namespace MVCBank.Services
         public void CreateCheckAccount(string firstName, string lastName, string userId, decimal initialBalance)
         {
             var accountNum = ("123MVC" + db.CheckAccounts.Count().ToString()).PadLeft(10, '0');
-            var checkAccount = new CheckAccount { FirstName =firstName, LastName = lastName, AccountNumber = accountNum, Balance = initialBalance, ApplicationUserId = userId };
+            var checkAccount = new CheckAccount { FirstName = firstName, LastName = lastName, AccountNumber = accountNum, Balance = initialBalance, ApplicationUserId = userId };
             this.db.CheckAccounts.Add(checkAccount);
             this.db.SaveChanges();
+        }
+
+        public static bool isAdmin(string userId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var isUserAdmin = db.Users.Any(user => user.Id == userId && user.UserRole == "Admin");
+
+            return isUserAdmin ? true : false;
         }
 
     }
