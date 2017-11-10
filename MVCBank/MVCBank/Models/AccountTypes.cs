@@ -5,6 +5,12 @@ using System.Web;
 
 namespace MVCBank.Models
 {
+    enum Accounts
+    {
+        Private = 0,
+        Personal = 1,
+        Corporate = 2
+    }
     public class AccountTypes
     {
         public string[] GetAccountTypes()

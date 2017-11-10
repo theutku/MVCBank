@@ -67,5 +67,6 @@ namespace MVCBank.Controllers
         {
             return Json("Your Message: " + clientMessage,JsonRequestBehavior.AllowGet);
         }
+
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MVCBank.Models;
 using Microsoft.AspNet.Identity;
+using MVCBank.Services;
 
 namespace MVCBank.Controllers
 {
@@ -35,14 +36,16 @@ namespace MVCBank.Controllers
             return View(userCheckAccount);
         }
 
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
+        [CheckIfAdmin]
         public ActionResult DetailsForAdmin(int accountId)
         {
             CheckAccount accountDetail = this.db.CheckAccounts.Find(accountId);
             return View("Details", accountDetail);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [CheckIfAdmin]
         public ActionResult List()
         {
             List<CheckAccount> allAccounts = this.db.CheckAccounts.ToList();
@@ -113,6 +116,11 @@ namespace MVCBank.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Unauthorized()
+        {
+            return View("Unauthorized");
         }
     }
 }

@@ -36,7 +36,8 @@
                 @Html.DisplayFor(modelItem => item.User.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AccountNumber)
+                @Html.ActionLink(@Html.DisplayFor(modelItem => item.AccountNumber).ToString(), "DetailsForAdmin", new { accountId = item.Id })
+                
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -49,7 +50,6 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "DetailsForAdmin", new { accountId = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>

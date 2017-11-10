@@ -19,6 +19,10 @@
         <a href="#" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-transfer"></span> Transfer Funds</a>
         <a href="@Url.Action("Deposit", "Transaction", new { checkAccountId = ViewBag.checkAccountId})" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-circle-arrow-up"></span> Deposit</a>
     </div>
+    @if (Request.RequestContext.HttpContext.User)
+    <div class="col-md-12 margin-top-20">
+        <a href="@Url.Action("List", "CheckAccount")" class="btn btn-success btn-large btn-block"><span class="glyphicon glyphicon-list"></span> List Accounts &raquo;</a>
+    </div>
 </div>
 
 
