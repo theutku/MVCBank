@@ -19,14 +19,16 @@
         <a href="#" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-transfer"></span> Transfer Funds</a>
         <a href="@Url.Action("Deposit", "Transaction", new { checkAccountId = ViewBag.checkAccountId})" class="btn btn-primary btn-large btn-block"><span class="glyphicon glyphicon-circle-arrow-up"></span> Deposit</a>
     </div>
-    @if (Request.RequestContext.HttpContext.User)
-    <div class="col-md-12 margin-top-20">
+    
+</div>
+<div class="row margin-top-20" >
+    <div class="col-md-12">
         <a href="@Url.Action("List", "CheckAccount")" class="btn btn-success btn-large btn-block"><span class="glyphicon glyphicon-list"></span> List Accounts &raquo;</a>
     </div>
 </div>
 
 
-<h3>Your Information</h3>
-<h5>You are currently using @Request.Browser.Browser</h5>
-<h5>You are on IP Adress: @Request.UserHostAddress</h5>
-<h5>Your serial number: @Html.Action("Serial", "Home", new { letterCase = "upper" })</h5>
+    <h3>Your Information</h3>
+    <h5>You are currently using @Request.Browser.Browser</h5>
+    <h5>You are on IP Adress: @Request.UserHostAddress</h5>
+    <h5>Your serial number: @Html.Action("Serial", "Home", new { letterCase = "upper" })</h5>

@@ -12,7 +12,7 @@ namespace MVCBank.Controllers
         // GET: AccountTypes
         public ActionResult Index()
         {
-            string[] accountTypes = new AccountTypes().GetAccountTypes();
+            string[] accountTypes = new AccountNames().GetAccountTypes();
             ViewBag.AccountTypes = accountTypes;
             return View();
         }

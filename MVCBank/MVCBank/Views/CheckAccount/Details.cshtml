@@ -29,7 +29,7 @@
 
 
 @{
-    if (CheckAccountServices.isAdmin(currentUserId))
+    if (CheckAccountServices.isOfAccountType(currentUserId, AccountTypes.Admin))
     {
         @Html.ActionLink("Back to List", "List")
 

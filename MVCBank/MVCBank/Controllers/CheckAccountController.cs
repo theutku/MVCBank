@@ -37,7 +37,7 @@ namespace MVCBank.Controllers
         }
 
         //[Authorize(Roles ="Admin")]
-        [CheckIfAdmin]
+        [AllowOnlyAdmin]
         public ActionResult DetailsForAdmin(int accountId)
         {
             CheckAccount accountDetail = this.db.CheckAccounts.Find(accountId);
@@ -45,7 +45,7 @@ namespace MVCBank.Controllers
         }
 
         //[Authorize(Roles = "Admin")]
-        [CheckIfAdmin]
+        [AllowOnlyAdmin]
         public ActionResult List()
         {
             List<CheckAccount> allAccounts = this.db.CheckAccounts.ToList();
@@ -58,6 +58,7 @@ namespace MVCBank.Controllers
             return View();
         }
 
+        
         // POST: CheckAccount/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
@@ -66,7 +67,7 @@ namespace MVCBank.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

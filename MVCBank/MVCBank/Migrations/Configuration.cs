@@ -47,7 +47,7 @@ namespace MVCBank.Migrations
 
             if (currentAdmin == null)
             {
-                var adminUser = new ApplicationUser { UserName = "admin@mvcbank.com", Email = "admin@mvcbank.com", UserRole = "Admin" };
+                var adminUser = new ApplicationUser { UserName = "admin@mvcbank.com", Email = "admin@mvcbank.com", UserRole = Services.AccountTypes.Admin.ToString() };
                 userManager.Create(adminUser, "12345Ut.");
 
                 var service = new CheckAccountServices(context);
@@ -56,9 +56,9 @@ namespace MVCBank.Migrations
                 context.SaveChanges();
 
             }
-            else if (context.Users.Any(user => user.UserName == "admin@mvcbank.com" && user.UserRole == null))
+            else if (context.Users.Any(user => user.UserName == "admin@mvcbank.com" && (user.UserRole == null || user.UserRole != Services.AccountTypes.Admin.ToString()))) 
             {
-                currentAdmin.UserRole = "Admin";
+                currentAdmin.UserRole = Services.AccountTypes.Admin.ToString();
                 context.Entry(currentAdmin).State = EntityState.Modified;
                 context.SaveChanges();
             }

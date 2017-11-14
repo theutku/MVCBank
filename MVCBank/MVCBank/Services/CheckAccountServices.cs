@@ -6,6 +6,13 @@ using MVCBank.Models;
 
 namespace MVCBank.Services
 {
+    public enum AccountTypes
+    {
+        Private,
+        Personal,
+        Corporate,
+        Admin
+    }
     public class CheckAccountServices
     {
         private ApplicationDbContext db;
@@ -23,13 +30,14 @@ namespace MVCBank.Services
             this.db.SaveChanges();
         }
 
-        public static bool isAdmin(string userId)
+        public static bool isOfAccountType(string userId, AccountTypes accountType)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            var isUserAdmin = db.Users.Any(user => user.Id == userId && user.UserRole == "Admin");
+            bool isOfGivenAccountType = db.Users.Any(user => user.Id == userId && user.UserRole == accountType.ToString());
 
-            return isUserAdmin ? true : false;
+            return isOfGivenAccountType;
         }
+
 
     }
 }

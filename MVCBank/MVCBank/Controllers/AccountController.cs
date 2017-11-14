@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -22,7 +23,7 @@ namespace MVCBank.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +35,9 @@ namespace MVCBank.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -120,7 +121,7 @@ namespace MVCBank.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -139,6 +140,14 @@ namespace MVCBank.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            string[] availableAccounts = Enum.GetNames(typeof(AccountTypes));
+            List<SelectListItem> items = new List<SelectListItem>();
+            for (int i = 0; i < availableAccounts.Count(); i++)
+            {
+                items.Add(new SelectListItem { Text = availableAccounts[i], Value = i.ToString() });
+            }
+
+            ViewBag.AccountTypes = items;
             return View();
         }
 
@@ -151,15 +160,15 @@ namespace MVCBank.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserRole = "Customer" };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserRole = Services.AccountTypes.Personal.ToString() };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, model.FirstName));
                     var service = new CheckAccountServices(HttpContext.GetOwinContext().Get<ApplicationDbContext>());
-                    service.CreateCheckAccount(model.FirstName, model.LastName, user.Id, 0);
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    service.CreateCheckAccount(model.FirstName, model.LastName, user.Id, 10);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -426,7 +435,7 @@ namespace MVCBank.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -483,6 +492,6 @@ namespace MVCBank.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
-#endregion
+        #endregion
     }
 }

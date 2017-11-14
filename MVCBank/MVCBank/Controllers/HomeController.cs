@@ -16,15 +16,15 @@ namespace MVCBank.Controllers
 
         [Authorize]
         public ActionResult Index(int data = 1)
-        { 
+        {
             ViewBag.PageHeader = "Home" + data;
             var userId = User.Identity.GetUserId();
             var checkAccountId = this.db.CheckAccounts.Where(c => c.ApplicationUserId == userId).First().Id;
             ViewBag.CheckAccountId = checkAccountId;
             return View();
         }
-         
-    
+
+
 
         public ActionResult Test(string letter)
         {
@@ -65,7 +65,12 @@ namespace MVCBank.Controllers
         [HttpPost]
         public JsonResult Contact(string clientMessage)
         {
-            return Json("Your Message: " + clientMessage,JsonRequestBehavior.AllowGet);
+            return Json("Your Message: " + clientMessage, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Foo()
+        {
+            return View("About");
         }
 
     }
