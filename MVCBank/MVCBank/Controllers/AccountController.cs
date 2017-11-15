@@ -176,6 +176,7 @@ namespace MVCBank.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+                FillAccountNames(model);
                 AddErrors(result);
             }
 
