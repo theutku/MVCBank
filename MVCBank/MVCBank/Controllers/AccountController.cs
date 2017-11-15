@@ -135,20 +135,19 @@ namespace MVCBank.Controllers
             }
         }
 
+        private static void FillAccountNames(RegisterViewModel model)
+        {
+            model.AccountTypes = Enum.GetNames(typeof(AccountTypes)).Select(item => new SelectListItem() { Text = item, Value = item });
+        }
         //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
-            string[] availableAccounts = Enum.GetNames(typeof(AccountTypes));
-            List<SelectListItem> items = new List<SelectListItem>();
-            for (int i = 0; i < availableAccounts.Count(); i++)
-            {
-                items.Add(new SelectListItem { Text = availableAccounts[i], Value = i.ToString() });
-            }
+            var register = new RegisterViewModel();
+            FillAccountNames(register);
 
-            ViewBag.AccountTypes = items;
-            return View();
+            return View(register);
         }
 
         //
@@ -160,7 +159,7 @@ namespace MVCBank.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserRole = Services.AccountTypes.Personal.ToString() };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserRole = model.SelectedAccountType };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

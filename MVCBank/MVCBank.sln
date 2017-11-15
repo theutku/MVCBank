@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCBank", "MVCBank\MVCBank.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCBank.Tests", "MVCBank.Tests\MVCBank.Tests.csproj", "{53B040F0-ADB2-4648-8AC7-09D1D7DD8788}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCBank.Web.Helpers", "MVCBank.Web.Helpers\MVCBank.Web.Helpers.csproj", "{FB21F84C-8160-4737-B6EB-C35BEB15E114}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{53B040F0-ADB2-4648-8AC7-09D1D7DD8788}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53B040F0-ADB2-4648-8AC7-09D1D7DD8788}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53B040F0-ADB2-4648-8AC7-09D1D7DD8788}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB21F84C-8160-4737-B6EB-C35BEB15E114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB21F84C-8160-4737-B6EB-C35BEB15E114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB21F84C-8160-4737-B6EB-C35BEB15E114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB21F84C-8160-4737-B6EB-C35BEB15E114}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

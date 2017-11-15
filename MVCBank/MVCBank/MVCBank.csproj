@@ -287,6 +287,12 @@
       <DependentUpon>201711070806208_AccountNumberChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MVCBank.Web.Helpers\MVCBank.Web.Helpers.csproj">
+      <Project>{fb21f84c-8160-4737-b6eb-c35beb15e114}</Project>
+      <Name>MVCBank.Web.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

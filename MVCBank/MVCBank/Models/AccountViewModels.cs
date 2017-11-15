@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MVCBank.Services;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MVCBank.Models
@@ -91,8 +92,13 @@ namespace MVCBank.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Display(Name = "Account Type")]
+        public IEnumerable<System.Web.Mvc.SelectListItem> AccountTypes { get; set; }
+
         [Required]
-        [Display(Name ="Account Type")]
+        public string SelectedAccountType { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel
